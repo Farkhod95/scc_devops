@@ -108,7 +108,7 @@ class IpAddressListSerializer(LocaleSerializer):
 
     class Meta:
         model = IpAddress
-        fields = ('id', 'ip_address', 'mask', 'gateway', 'type',' type_detail', 'text', 'created_time', 'updated_time', 'created_by', 'updated_by')
+        fields = ('id', 'ip_address', 'mask', 'gateway', 'type','type_detail', 'text', 'created_time', 'updated_time', 'created_by', 'updated_by')
 
 
 class IpAddressInfoSerializer(LocaleSerializer):
