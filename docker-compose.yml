@@ -11,8 +11,6 @@ services:
       - static_volume:/app/scc_static
     environment:
       - PYTHONUNBUFFERED=1
-    env_file:
-      - .env              # agar .env dan ham foydalanayotgan bo'lsang
     depends_on:
       - db
     # DB tayyor bo'lguncha kutish

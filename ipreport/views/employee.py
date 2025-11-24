@@ -17,7 +17,7 @@ class EmployeeView(ListCreateAPIView):
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = EmployeeFilter
     search_fields = ('fio', 'gender')
-    ordering = ['serial_number']
+    ordering = ['id']
 
     def get_queryset(self):
         return Employee.objects.all()
