@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from directory.serializers import RegionListPublicSerializer, DistrictListPublicSerializer, CountryListSerializer, \
     DepartmentListSerializer, PositionSerializer, RegionListSerializer, DistrictSerializer
-from .models import Employee, Wlan, DeviceType, IpAddress
+from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo
 
 
 # Tarjima asosiy serializeri
@@ -76,7 +76,8 @@ class EmployeeListSerializer(LocaleSerializer):
         fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday', 'department', 'department_detail',
                   'position', 'position_detail', 'region', 'department_head', 'department_head_detail',
                   'region_detail', 'district_detail', 'district', 'ip_address', 'updated_time', 'mac_address', 'vpn',
-                  'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work',)
+                  'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work', 'created_time',
+                  'updated_time', 'created_by', 'updated_by')
 
 
 class WlanSerializer(LocaleSerializer):
@@ -103,8 +104,28 @@ class IpAddressSerializer(LocaleSerializer):
 
 
 class IpAddressListSerializer(LocaleSerializer):
-    type_detail = DepartmentListSerializer(source="type", read_only=True)
+    type_detail = DeviceTypeSerializer(source="type", read_only=True)
 
     class Meta:
         model = IpAddress
-        fields = ('id', 'ip_address', 'mask', 'gateway', 'type',' type_detail', 'text')
+        fields = ('id', 'ip_address', 'mask', 'gateway', 'type',' type_detail', 'text', 'created_time', 'updated_time', 'created_by', 'updated_by')
+
+
+class IpAddressInfoSerializer(LocaleSerializer):
+    class Meta:
+        model = IpAddressInfo
+        fields = ('id', 'ipaddress', 'employee', 'ip_address', 'status')
+        extra_kwargs = {
+            'ipaddress': {"required": True},
+            'employee': {"required": True},
+            'ip_address': {"required": True},
+        }
+
+
+class IpAddressInfoListSerializer(LocaleSerializer):
+    ipaddress_detail = IpAddressSerializer(source="ipaddress", read_only=True)
+    employee_detail = EmployeeSerializer(source="employee", read_only=True)
+
+    class Meta:
+        model = IpAddressInfo
+        fields = ('id', 'ipaddress', 'ipaddress_detail', 'employee', 'employee_detail', 'ip_address', 'status', 'created_time', 'updated_time', 'created_by', 'updated_by')

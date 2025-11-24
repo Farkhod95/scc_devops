@@ -92,28 +92,28 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 52428800
 
 WSGI_APPLICATION = 'main.wsgi.application'
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'exampluse_db',
-#         'USER': 'postgres',
-#         'PASSWORD': 'root',
-#         'HOST': 'localhost',
-#         'PORT': '5432',
-#     }
-# }
-
-#
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_devops',
+        'NAME': 'exampluse_db',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'db',
+        'HOST': 'localhost',
         'PORT': '5432',
     }
 }
+
+#
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'db_devops',
+#         'USER': 'postgres',
+#         'PASSWORD': 'root',
+#         'HOST': 'db',
+#         'PORT': '5432',
+#     }
+# }
 
 
 

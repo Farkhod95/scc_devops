@@ -3,6 +3,7 @@ from django.urls import re_path, path
 from ipreport.views.device_type import DeviceTypeView, DeviceTypeDetailView
 from ipreport.views.employee import EmployeeView, EmployeeDetailView
 from ipreport.views.ip_address import IpAddressView, IpAddressDetailView
+from ipreport.views.ip_address_info import IpAddressInfoView, IpAddressInfoDetailView
 from ipreport.views.wlan import WlanView, WlanDetailView
 
 urlpatterns = [
@@ -17,4 +18,7 @@ urlpatterns = [
 
     re_path(r'^ip-address/$', IpAddressView.as_view(), name='ip-address-view'),
     path('ip-address/<int:pk>', IpAddressDetailView.as_view(), name='ip-address-detail-view'),
+
+    re_path(r'^ip-address-info/$', IpAddressInfoView.as_view(), name='ip-address-info-view'),
+    path('ip-address-info/<int:pk>', IpAddressInfoDetailView.as_view(), name='ip-address-info-detail-view'),
 ]

@@ -87,3 +87,20 @@ class IpAddress(BaseModel):
         verbose_name_plural = _('Ip Address')
 
 
+class IpAddressInfo(BaseModel):
+    STATUS = (
+        ('active', _('Active')),
+        ('inactive', _('Inactive')),
+    )
+
+    ipaddress = models.ForeignKey(IpAddress, related_name='ipaddress_1', on_delete=models.SET_NULL, null=True, blank=True)
+    employee = models.ForeignKey(Employee, related_name='ipaddress_info', on_delete=models.SET_NULL, null=True, blank=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    status = models.CharField(choices=STATUS, default='inactive', max_length=50, null=True, blank=True, )
+
+
+    class Meta:
+        verbose_name = _('Ip Address Info')
+        verbose_name_plural = _('Ip Address Info')
+
+

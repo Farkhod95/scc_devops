@@ -1,4 +1,4 @@
-# views/IpAddress.py
+# views/IpAddressInfo.py
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, filters
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
@@ -7,20 +7,20 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from ipreport.filterset import IpAddressFilter
-from ipreport.models import IpAddress
-from ipreport.serializers import IpAddressSerializer, IpAddressListSerializer
+from ipreport.filterset import IpAddressInfoFilter
+from ipreport.models import IpAddressInfo
+from ipreport.serializers import IpAddressInfoSerializer, IpAddressInfoListSerializer
 
 from restapp.pagination import ResultsSetPagination
 from restapp.utils.responses import nonContent
 
 
-class IpAddressFieldInfoView(APIView):
+class IpAddressInfoFieldInfoView(APIView):
     permission_classes = [IsAuthenticated,]
 
     def get(self, request):
         field_info = []
-        for field in IpAddress._meta.fields:
+        for field in IpAddressInfo._meta.fields:
             field_info.append({
                 "field_name": field.name,
                 "verbose_name": str(field.verbose_name),
@@ -32,46 +32,46 @@ class IpAddressFieldInfoView(APIView):
         return Response(field_info)
 
 
-class IpAddressView(ListCreateAPIView):
-    serializer_class = IpAddressListSerializer
+class IpAddressInfoView(ListCreateAPIView):
+    serializer_class = IpAddressInfoListSerializer
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    filterset_class = IpAddressFilter
-    search_fields = ('ip_address', 'mask')
+    filterset_class = IpAddressInfoFilter
+    search_fields = ('ip_address', 'type')
     ordering = ['id']
 
     def get_queryset(self):
-        return IpAddress.objects.all()
+        return IpAddressInfo.objects.all()
 
     def post(self, request):
-        serializer = IpAddressSerializer(data=request.data)
+        serializer = IpAddressInfoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(created_by=self.request.user)
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
-class IpAddressDetailView(RetrieveUpdateDestroyAPIView):
-    serializer_class = IpAddressSerializer
+class IpAddressInfoDetailView(RetrieveUpdateDestroyAPIView):
+    serializer_class = IpAddressInfoSerializer
 
     def get_queryset(self):
-        return IpAddress.objects.all()
+        return IpAddressInfo.objects.all()
 
     def perform_update(self, serializer):
         serializer.save(updated_by=self.request.user)
 
     def get(self, request, pk):
-        instance = get_object_or_404(IpAddress, id=pk)
-        serializer = IpAddressListSerializer(instance)
+        instance = get_object_or_404(IpAddressInfo, id=pk)
+        serializer = IpAddressInfoListSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
-        instance = get_object_or_404(IpAddress, id=pk)
+        instance = get_object_or_404(IpAddressInfo, id=pk)
         serializer = self.serializer_class(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(updated_by=self.request.user)
         return Response(serializer.data, status.HTTP_202_ACCEPTED)
 
     def delete(self, request, pk):
-        instance = get_object_or_404(IpAddress, id=pk)
+        instance = get_object_or_404(IpAddressInfo, id=pk)
         instance.delete()
         return Response(nonContent(), status.HTTP_204_NO_CONTENT)

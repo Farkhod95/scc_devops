@@ -9,33 +9,6 @@ from ipreport.models import Employee
 from ipreport.serializers import EmployeeSerializer, EmployeeListSerializer
 
 from restapp.pagination import ResultsSetPagination
-from rest_framework.permissions import AllowAny
-
-
-class EmployeePublicView(ListCreateAPIView):
-    serializer_class = EmployeeListSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    filterset_class = EmployeeFilter
-    search_fields = ('fio_en', 'fio_ru', 'fio_uz', 'fio_kr', 'gender', 'address', 'working_time', 'phone', 'email',
-                     'date_of_birthday')
-    ordering = ['serial_number']
-    permission_classes = (AllowAny,)
-    http_method_names = ['get']
-
-    def get_queryset(self):
-        return Employee.objects.all()
-
-
-class EmployeeDetailPublicView(APIView):
-    serializer_class = EmployeeSerializer
-    permission_classes = (AllowAny,)
-    http_method_names = ['get']
-
-    def get(self, request, pk):
-        instance = get_object_or_404(Employee, id=pk)
-        serializer = EmployeeListSerializer(instance)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class EmployeeView(ListCreateAPIView):
@@ -43,8 +16,7 @@ class EmployeeView(ListCreateAPIView):
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = EmployeeFilter
-    search_fields = ('fio_en', 'fio_ru', 'fio_uz', 'fio_kr', 'gender', 'address', 'working_time', 'phone', 'email',
-                     'date_of_birthday')
+    search_fields = ('fio', 'gender')
     ordering = ['serial_number']
 
     def get_queryset(self):
