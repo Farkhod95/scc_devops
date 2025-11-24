@@ -8,6 +8,12 @@ ENV PYTHONUNBUFFERED 1
 # Set working directory
 WORKDIR /app
 
+# System-level deps (agar kerak bo'lsa, psycopg2 va boshqalar uchun)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+ && rm -rf /var/lib/apt/lists/*
+
 # Copy requirements file
 COPY requirements.txt /app/
 
@@ -17,9 +23,11 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 # Copy project files
 COPY . /app/
 
-# Expose the required port
-EXPOSE 8080
+# wait-for-it.sh ni executable qilamiz
+RUN chmod +x /app/wait-for-it.sh
 
-# Default command (overridden by docker-compose if needed)
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
-CMD ["daphne", "-p", "8000", "main.asgi:application"]
+# Expose the required port (container ichida)
+EXPOSE 8000
+
+# Default command (docker-compose override qiladi baribir)
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8000", "main.asgi:application"]

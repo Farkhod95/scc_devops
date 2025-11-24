@@ -5,15 +5,17 @@ services:
     build: .
     container_name: devops_web
     ports:
-      - "8080:8000"
+      - "8080:8000"   # host:container (host 8080 -> container 8000)
     volumes:
       - .:/app
       - static_volume:/app/scc_static
     environment:
       - PYTHONUNBUFFERED=1
+    env_file:
+      - .env              # agar .env dan ham foydalanayotgan bo'lsang
     depends_on:
       - db
-    #entrypoint: ["./wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    # DB tayyor bo'lguncha kutish
     entrypoint: ["./wait-for-it.sh", "db:5432", "--"]
     command: ["daphne", "-b", "0.0.0.0", "-p", "8000", "main.asgi:application"]
 
@@ -21,14 +23,13 @@ services:
     image: postgres:15
     container_name: db_devops
     ports:
-      - "5432:5432" # Mahalliy tizim uchun 5433 port ochiladi
+      - "5432:5432"  # host 5432 -> container 5432
     environment:
       POSTGRES_DB: db_devops
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: root
     volumes:
       - postgres_data:/var/lib/postgresql/data
-
 
 volumes:
   postgres_data:
