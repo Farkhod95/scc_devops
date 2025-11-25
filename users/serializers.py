@@ -110,6 +110,13 @@ class UserListPublicSerializer(serializers.ModelSerializer):
             'date_joined', 'role', 'roles', 'password', 'region', 'region_detail', 'district', 'district_detail', 'address',
             'avatar')
 
+class UserDetailSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = (
+            'id', 'username', 'fullname', 'date_of_birthday', 'gender', 'phone_number',)
+
 
 class UserListSerializer(serializers.ModelSerializer):
     roles = RoleSerializer(source='role', read_only=True)

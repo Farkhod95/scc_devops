@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from directory.serializers import RegionListPublicSerializer, DistrictListPublicSerializer, CountryListSerializer, \
     DepartmentListSerializer, PositionSerializer, RegionListSerializer, DistrictSerializer
+from users.serializers import UserDetailSerializer
 from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo
 
 
@@ -70,6 +71,8 @@ class EmployeeListSerializer(LocaleSerializer):
     region_detail = RegionListSerializer(source="region", read_only=True)
     district_detail = DistrictSerializer(source="district", read_only=True)
     department_head_detail = EmployeeHeadSerializer(source="department_head", read_only=True)
+    created_by_detail = UserDetailSerializer(source="created_by", read_only=True)
+    updated_by_detail = UserDetailSerializer(source="updated_by", read_only=True)
 
     class Meta:
         model = Employee
@@ -77,7 +80,18 @@ class EmployeeListSerializer(LocaleSerializer):
                   'position', 'position_detail', 'region', 'department_head', 'department_head_detail',
                   'region_detail', 'district_detail', 'district', 'ip_address', 'updated_time', 'mac_address', 'vpn',
                   'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work', 'created_time',
-                  'updated_time', 'created_by', 'updated_by')
+                  'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',)
+
+
+class EmployeePublicSerializer(LocaleSerializer):
+    department_detail = DepartmentListSerializer(source="department", read_only=True)
+    position_detail = PositionSerializer(source="position", read_only=True)
+
+    class Meta:
+        model = Employee
+        fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday',
+                  'department', 'department_detail', 'position', 'position_detail', 'region', 'district', 'ip_address', 'updated_time', 'mac_address', 'vpn',
+                  'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work',)
 
 
 class WlanSerializer(LocaleSerializer):
@@ -105,10 +119,13 @@ class IpAddressSerializer(LocaleSerializer):
 
 class IpAddressListSerializer(LocaleSerializer):
     type_detail = DeviceTypeSerializer(source="type", read_only=True)
+    created_by_detail = UserDetailSerializer(source="created_by", read_only=True)
+    updated_by_detail = UserDetailSerializer(source="updated_by", read_only=True)
 
     class Meta:
         model = IpAddress
-        fields = ('id', 'ip_address', 'mask', 'gateway', 'type','type_detail', 'text', 'created_time', 'updated_time', 'created_by', 'updated_by')
+        fields = ('id', 'ip_address', 'mask', 'gateway', 'type','type_detail', 'text', 'created_time', 'updated_time',
+                  'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',)
 
 
 class IpAddressInfoSerializer(LocaleSerializer):
@@ -124,8 +141,11 @@ class IpAddressInfoSerializer(LocaleSerializer):
 
 class IpAddressInfoListSerializer(LocaleSerializer):
     ipaddress_detail = IpAddressSerializer(source="ipaddress", read_only=True)
-    employee_detail = EmployeeSerializer(source="employee", read_only=True)
+    employee_detail = EmployeePublicSerializer(source="employee", read_only=True)
+    created_by_detail = UserDetailSerializer(source="created_by", read_only=True)
+    updated_by_detail = UserDetailSerializer(source="updated_by", read_only=True)
 
     class Meta:
         model = IpAddressInfo
-        fields = ('id', 'ipaddress', 'ipaddress_detail', 'employee', 'employee_detail', 'ip_address', 'status', 'created_time', 'updated_time', 'created_by', 'updated_by')
+        fields = ('id', 'ipaddress', 'ipaddress_detail', 'employee', 'employee_detail', 'ip_address', 'status',
+                  'created_time', 'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',)
