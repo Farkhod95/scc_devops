@@ -130,7 +130,7 @@ class PositionSerializer(LocaleSerializer):
             'name_uz': {"required": True},
             'name_ru': {"required": True},
             'name_en': {"required": True},
-            'department': {"required": True},
+            # 'department': {"required": True},
         }
 
 
