@@ -3,7 +3,7 @@ from rest_framework import serializers
 from directory.serializers import RegionListPublicSerializer, DistrictListPublicSerializer, CountryListSerializer, \
     DepartmentListSerializer, PositionSerializer, RegionListSerializer, DistrictSerializer
 from users.serializers import UserDetailSerializer
-from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo
+from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera
 
 
 # Tarjima asosiy serializeri
@@ -131,7 +131,7 @@ class IpAddressListSerializer(LocaleSerializer):
 class IpAddressInfoSerializer(LocaleSerializer):
     class Meta:
         model = IpAddressInfo
-        fields = ('id', 'ipaddress', 'employee', 'ip_address', 'status')
+        fields = ('id', 'ipaddress', 'employee', 'ip_address', 'status', 'mac_address')
         extra_kwargs = {
             'ipaddress': {"required": True},
             'employee': {"required": True},
@@ -148,4 +148,33 @@ class IpAddressInfoListSerializer(LocaleSerializer):
     class Meta:
         model = IpAddressInfo
         fields = ('id', 'ipaddress', 'ipaddress_detail', 'employee', 'employee_detail', 'ip_address', 'status',
-                  'created_time', 'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',)
+                  'created_time', 'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',
+                  'mac_address')
+
+
+class CameraTypeSerializer(LocaleSerializer):
+    class Meta:
+        model = CameraType
+        fields = ('id', 'name')
+
+
+class CameraSerializer(LocaleSerializer):
+    class Meta:
+        model = Camera
+        fields = ('id', 'image', 'ip_address', 'maska', 'gateway', 'model', 'serial_number', 'type', 'address')
+        extra_kwargs = {
+            'ip_address': {"required": True},
+            'maska': {"required": True},
+            'type': {"required": True},
+        }
+
+
+class CameraListSerializer(LocaleSerializer):
+    type_detail = CameraTypeSerializer(source="type", read_only=True)
+    created_by_detail = UserDetailSerializer(source="created_by", read_only=True)
+    updated_by_detail = UserDetailSerializer(source="updated_by", read_only=True)
+
+    class Meta:
+        model = Camera
+        fields = ('id', 'image', 'ip_address', 'maska', 'gateway', 'model', 'serial_number', 'type', 'type_detail',
+                  'address', 'created_time', 'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail')

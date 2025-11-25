@@ -97,10 +97,33 @@ class IpAddressInfo(BaseModel):
     employee = models.ForeignKey(Employee, related_name='ipaddress_info', on_delete=models.SET_NULL, null=True, blank=True)
     ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
     status = models.CharField(choices=STATUS, default='inactive', max_length=50, null=True, blank=True, )
-
+    mac_address = models.CharField(_('MAC address'), max_length=255, blank=True, null=True)
 
     class Meta:
         verbose_name = _('Ip Address Info')
         verbose_name_plural = _('Ip Address Info')
+
+
+class CameraType(BaseModel):
+    name = models.CharField(max_length=255, null=True, blank=True, unique=True)
+
+    class Meta:
+        verbose_name = _('Camera Type')
+        verbose_name_plural = _('Camera Type')
+
+
+class Camera(BaseModel):
+    image = models.ImageField(upload_to='camera/%Y/%m/%d', null=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    maska = models.CharField(_('Maska'), max_length=255, blank=True, null=True)
+    gateway = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    model = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    serial_number = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    type = models.ForeignKey(CameraType, related_name='camera_type', on_delete=models.SET_NULL, null=True, blank=True)
+    address = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('Camera')
+        verbose_name_plural = _('Camera')
 
 

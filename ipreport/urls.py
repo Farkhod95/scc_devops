@@ -1,5 +1,7 @@
 from django.urls import re_path, path
 
+from ipreport.views.camera import CameraView, CameraDetailView
+from ipreport.views.camera_type import CameraTypeView, CameraTypeDetailView
 from ipreport.views.device_type import DeviceTypeView, DeviceTypeDetailView
 from ipreport.views.employee import EmployeeView, EmployeeDetailView
 from ipreport.views.ip_address import IpAddressView, IpAddressDetailView
@@ -21,4 +23,10 @@ urlpatterns = [
 
     re_path(r'^ip-address-info/$', IpAddressInfoView.as_view(), name='ip-address-info-view'),
     path('ip-address-info/<int:pk>', IpAddressInfoDetailView.as_view(), name='ip-address-info-detail-view'),
+
+    re_path(r'^camera-type/$', CameraTypeView.as_view(), name='camera-type-view'),
+    path('camera-type/<int:pk>', CameraTypeDetailView.as_view(), name='camera-type-detail-view'),
+
+    re_path(r'^camera/$', CameraView.as_view(), name='camera-view'),
+    path('camera/<int:pk>', CameraDetailView.as_view(), name='camera-detail-view'),
 ]
