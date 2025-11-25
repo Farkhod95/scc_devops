@@ -53,13 +53,13 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    roles = RoleSerializer(source='role', read_only=True)
+    # roles = RoleSerializer(source='role', read_only=True)
 
     class Meta:
         model = User
         fields = (
             'id', 'username', 'fullname', 'is_active', 'date_of_birthday', 'gender', 'phone_number', 'avatar', 'email',
-            'date_joined', 'role', 'roles', 'password', 'region', 'district', 'address', 'avatar')
+            'date_joined', 'role', 'password', 'region', 'district', 'address', 'avatar')
         extra_kwargs = {
             'username': {
                 'validators': [UnicodeUsernameValidator(), UniqueValidator(queryset=User.objects.all())],
@@ -85,7 +85,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get("email", instance.email)
         instance.date_joined = validated_data.get("date_joined", instance.date_joined)
         instance.role = validated_data.get("role", instance.role)
-        instance.roles = validated_data.get("roles", instance.roles)
+        # instance.roles = validated_data.get("roles", instance.roles)
         instance.region = validated_data.get("region", instance.region)
         instance.district = validated_data.get("district", instance.district)
         instance.address = validated_data.get("address", instance.address)
