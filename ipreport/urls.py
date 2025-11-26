@@ -7,10 +7,14 @@ from ipreport.views.employee import EmployeeView, EmployeeDetailView
 from ipreport.views.ip_address import IpAddressView, IpAddressDetailView
 from ipreport.views.ip_address_info import IpAddressInfoView, IpAddressInfoDetailView
 from ipreport.views.wlan import WlanView, WlanDetailView
+from ipreport.views.wlan_parent import WlanParentView, WlanParentDetailView
 
 urlpatterns = [
     re_path(r'^employee/$', EmployeeView.as_view(), name='employee_view'),
     path('employee/<int:pk>', EmployeeDetailView.as_view(), name='employee_detail_view'),
+
+    re_path(r'^wlan-parent/$', WlanParentView.as_view(), name='wlan-parent-view'),
+    path('wlan-parent/<int:pk>', WlanParentDetailView.as_view(), name='wlan-parent-detail-view'),
 
     re_path(r'^wlan/$', WlanView.as_view(), name='wlan-view'),
     path('wlan/<int:pk>', WlanDetailView.as_view(), name='wlan-detail-view'),

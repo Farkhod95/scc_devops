@@ -46,6 +46,7 @@ class Employee(BaseModel):
     file_pdf = models.FileField(blank=True, null=True, upload_to='open_data/%Y/%m/%d')
     time_of_employment = models.DateField(_('Ishga kirgan vaqti'), null=True, blank=True, )
     time_to_go_to_work = models.DateField(_('Ishga ketgan vaqti'), null=True, blank=True, )
+    pc_name = models.CharField(max_length=255, null=True, blank=True)
 
 
     class Meta:
@@ -53,7 +54,21 @@ class Employee(BaseModel):
         verbose_name_plural = _('Employees')
 
 
+class WlanParent(BaseModel):
+    name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    mask = models.CharField(_('Name'), max_length=255, blank=True, null=True)
+    gateway = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    text = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = _('Wlan Parent')
+        verbose_name_plural = _('Wlan Parent')
+
+
 class Wlan(BaseModel):
+    parent = models.ForeignKey(WlanParent, related_name='wlan_parents', on_delete=models.SET_NULL, null=True, blank=True)
+    port_number = models.CharField(max_length=255, null=True, blank=True, unique=True)
     wlan_id = models.CharField(max_length=255, null=True, blank=True, unique=True)
     name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
     ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
@@ -76,6 +91,7 @@ class DeviceType(BaseModel):
 
 class IpAddress(BaseModel):
     ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    pc_name = models.CharField(max_length=255, null=True, blank=True)
     mask = models.CharField(_('Name'), max_length=255, blank=True, null=True)
     gateway = models.CharField(max_length=255, null=True, blank=True, unique=True)
     type = models.ForeignKey(DeviceType, related_name='ip_device', on_delete=models.SET_NULL, null=True, blank=True)

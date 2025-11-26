@@ -1,5 +1,5 @@
 from django_filters.rest_framework import FilterSet
-from ipreport.models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera
+from ipreport.models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera, WlanParent
 
 
 class EmployeeFilter(FilterSet):
@@ -16,6 +16,18 @@ class EmployeeFilter(FilterSet):
             'ip_address': ['exact'],
         }
 
+
+class WlanParentFilter(FilterSet):
+
+    class Meta:
+        model = WlanParent
+        fields = {
+            'name': ['exact'],
+            'ip_address': ['exact'],
+            'mask': ['exact'],
+        }
+
+
 class WlanFilter(FilterSet):
 
     class Meta:
@@ -24,6 +36,7 @@ class WlanFilter(FilterSet):
             'wlan_id': ['exact'],
             'name': ['exact'],
             'ip_address': ['exact'],
+            'parent': ['exact'],
         }
 
 

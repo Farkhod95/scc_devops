@@ -3,7 +3,7 @@ from rest_framework import serializers
 from directory.serializers import RegionListPublicSerializer, DistrictListPublicSerializer, CountryListSerializer, \
     DepartmentListSerializer, PositionSerializer, RegionListSerializer, DistrictSerializer
 from users.serializers import UserDetailSerializer
-from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera
+from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera, WlanParent
 
 
 # Tarjima asosiy serializeri
@@ -50,13 +50,13 @@ class EmployeeHeadSerializer(LocaleSerializer):
 
     class Meta:
         model = Employee
-        fields = ("id", "fio", "avatar", "position")
+        fields = ("id", "fio", "avatar", "position", 'pc_name')
 
 
 class EmployeeSerializer(LocaleSerializer):
     class Meta:
         model = Employee
-        fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday',
+        fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday', 'pc_name',
                   'department', 'position', 'region', 'district', 'ip_address', 'updated_time', 'mac_address', 'vpn',
                   'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work',)
         extra_kwargs = {
@@ -77,7 +77,7 @@ class EmployeeListSerializer(LocaleSerializer):
     class Meta:
         model = Employee
         fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday', 'department', 'department_detail',
-                  'position', 'position_detail', 'region', 'department_head', 'department_head_detail',
+                  'position', 'position_detail', 'region', 'department_head', 'department_head_detail', 'pc_name',
                   'region_detail', 'district_detail', 'district', 'ip_address', 'updated_time', 'mac_address', 'vpn',
                   'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work', 'created_time',
                   'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',)
@@ -89,15 +89,42 @@ class EmployeePublicSerializer(LocaleSerializer):
 
     class Meta:
         model = Employee
-        fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday',
+        fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday', 'pc_name',
                   'department', 'department_detail', 'position', 'position_detail', 'region', 'district', 'ip_address', 'updated_time', 'mac_address', 'vpn',
                   'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work',)
+
+
+class WlanParentSerializer(LocaleSerializer):
+    class Meta:
+        model = WlanParent
+        fields = ('id', 'name', 'ip_address', 'mask', 'gateway', 'text')
+
+
+class WlanParentListSerializer(LocaleSerializer):
+    created_by_detail = UserDetailSerializer(source="created_by", read_only=True)
+    updated_by_detail = UserDetailSerializer(source="updated_by", read_only=True)
+
+    class Meta:
+        model = WlanParent
+        fields = ('id', 'name', 'ip_address', 'mask', 'gateway', 'text', 'created_time', 'updated_time',
+                  'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail')
 
 
 class WlanSerializer(LocaleSerializer):
     class Meta:
         model = Wlan
-        fields = ('id', 'wlan_id', 'name', 'ip_address', 'maska', 'gateway')
+        fields = ('id', 'parent', 'port_number', 'wlan_id', 'name', 'ip_address', 'maska', 'gateway')
+
+
+class WlanListSerializer(LocaleSerializer):
+    parent_detail = WlanParentSerializer(source="parent", read_only=True)
+    created_by_detail = UserDetailSerializer(source="created_by", read_only=True)
+    updated_by_detail = UserDetailSerializer(source="updated_by", read_only=True)
+
+    class Meta:
+        model = Wlan
+        fields = ('id', 'parent', 'parent_detail', 'port_number', 'wlan_id', 'name', 'ip_address', 'maska', 'gateway', 'created_time', 'updated_time',
+                  'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail')
 
 
 class DeviceTypeSerializer(LocaleSerializer):
@@ -109,7 +136,7 @@ class DeviceTypeSerializer(LocaleSerializer):
 class IpAddressSerializer(LocaleSerializer):
     class Meta:
         model = IpAddress
-        fields = ('id', 'ip_address', 'mask', 'gateway', 'type', 'text')
+        fields = ('id', 'ip_address', 'mask', 'gateway', 'type', 'text', 'pc_name')
         extra_kwargs = {
             'ip_address': {"required": True},
             'mask': {"required": True},
@@ -125,7 +152,7 @@ class IpAddressListSerializer(LocaleSerializer):
     class Meta:
         model = IpAddress
         fields = ('id', 'ip_address', 'mask', 'gateway', 'type','type_detail', 'text', 'created_time', 'updated_time',
-                  'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',)
+                  'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail', 'pc_name',)
 
 
 class IpAddressInfoSerializer(LocaleSerializer):

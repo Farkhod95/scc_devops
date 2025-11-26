@@ -1,4 +1,4 @@
-# views/wlan.py
+# views/WlanParent.py
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import status, filters
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, get_object_or_404
@@ -7,20 +7,20 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny
 
-from ipreport.filterset import WlanFilter
-from ipreport.models import Wlan
-from ipreport.serializers import WlanSerializer, WlanListSerializer
+from ipreport.filterset import WlanParentFilter
+from ipreport.models import WlanParent
+from ipreport.serializers import WlanParentSerializer, WlanParentListSerializer
 
 from restapp.pagination import ResultsSetPagination
 from restapp.utils.responses import nonContent
 
 
-class WlanFieldInfoView(APIView):
+class WlanParentFieldInfoView(APIView):
     permission_classes = [IsAuthenticated,]
 
     def get(self, request):
         field_info = []
-        for field in Wlan._meta.fields:
+        for field in WlanParent._meta.fields:
             field_info.append({
                 "field_name": field.name,
                 "verbose_name": str(field.verbose_name),
@@ -32,62 +32,46 @@ class WlanFieldInfoView(APIView):
         return Response(field_info)
 
 
-class WlanViewList(ListCreateAPIView):
-    serializer_class = WlanSerializer
+class WlanParentView(ListCreateAPIView):
+    serializer_class = WlanParentListSerializer
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    filterset_class = WlanFilter
-    search_fields = ('wlan_id', 'name')
-    ordering = ['pk']
-    permission_classes = (AllowAny,)
-    http_method_names = ['get']
-
-    def get_queryset(self):
-        return Wlan.objects.all()
-
-
-class WlanView(ListCreateAPIView):
-    serializer_class = WlanListSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    filterset_class = WlanFilter
-    search_fields = (
-        'wlan_id', 'name'
-    )
+    filterset_class = WlanParentFilter
+    search_fields = ('name', 'ip_address', 'mask')
     ordering = ['id']
 
     def get_queryset(self):
-        return Wlan.objects.all()
+        return WlanParent.objects.all()
 
     def post(self, request):
-        serializer = WlanSerializer(data=request.data)
+        serializer = WlanParentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(created_by=self.request.user)
         return Response(serializer.data, status.HTTP_201_CREATED)
 
 
-class WlanDetailView(RetrieveUpdateDestroyAPIView):
-    serializer_class = WlanSerializer
+class WlanParentDetailView(RetrieveUpdateDestroyAPIView):
+    serializer_class = WlanParentSerializer
 
     def get_queryset(self):
-        return Wlan.objects.all()
+        return WlanParent.objects.all()
 
     def perform_update(self, serializer):
         serializer.save(updated_by=self.request.user)
 
     def get(self, request, pk):
-        instance = get_object_or_404(Wlan, id=pk)
-        serializer = WlanListSerializer(instance)
+        instance = get_object_or_404(WlanParent, id=pk)
+        serializer = WlanParentListSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def put(self, request, pk):
-        instance = get_object_or_404(Wlan, id=pk)
+        instance = get_object_or_404(WlanParent, id=pk)
         serializer = self.serializer_class(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save(updated_by=self.request.user)
         return Response(serializer.data, status.HTTP_202_ACCEPTED)
 
     def delete(self, request, pk):
-        instance = get_object_or_404(Wlan, id=pk)
+        instance = get_object_or_404(WlanParent, id=pk)
         instance.delete()
         return Response(nonContent(), status.HTTP_204_NO_CONTENT)
