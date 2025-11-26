@@ -37,8 +37,7 @@ class CameraTypeView(ListCreateAPIView):
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = CameraTypeFilter
-    search_fields = ('name'
-    )
+    search_fields = ('name', 'name_en', 'name_uz', 'name_ru',)
     ordering = ['id']
 
     def get_queryset(self):

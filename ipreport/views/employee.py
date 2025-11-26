@@ -16,7 +16,7 @@ class EmployeeView(ListCreateAPIView):
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = EmployeeFilter
-    search_fields = ('fio', 'gender')
+    search_fields = ('fio', 'gender', 'phone', 'ip_address')
     ordering = ['id']
 
     def get_queryset(self):
