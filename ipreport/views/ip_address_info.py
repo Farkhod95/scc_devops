@@ -37,7 +37,7 @@ class IpAddressInfoView(ListCreateAPIView):
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = IpAddressInfoFilter
-    search_fields = ('ip_address', 'type')
+    search_fields = ('ip_address', 'type', 'pc_name')
     ordering = ['id']
 
     def get_queryset(self):

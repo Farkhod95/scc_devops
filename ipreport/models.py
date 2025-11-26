@@ -108,7 +108,7 @@ class IpAddressInfo(BaseModel):
         ('active', _('Active')),
         ('inactive', _('Inactive')),
     )
-
+    pc_name = models.CharField(max_length=255, null=True, blank=True)
     ipaddress = models.ForeignKey(IpAddress, related_name='ipaddress_1', on_delete=models.SET_NULL, null=True, blank=True)
     employee = models.ForeignKey(Employee, related_name='ipaddress_info', on_delete=models.SET_NULL, null=True, blank=True)
     ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)

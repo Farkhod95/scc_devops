@@ -158,7 +158,7 @@ class IpAddressListSerializer(LocaleSerializer):
 class IpAddressInfoSerializer(LocaleSerializer):
     class Meta:
         model = IpAddressInfo
-        fields = ('id', 'ipaddress', 'employee', 'ip_address', 'status', 'mac_address')
+        fields = ('id', 'pc_name', 'ipaddress', 'employee', 'ip_address', 'status', 'mac_address')
         extra_kwargs = {
             'ipaddress': {"required": True},
             'employee': {"required": True},
@@ -174,7 +174,7 @@ class IpAddressInfoListSerializer(LocaleSerializer):
 
     class Meta:
         model = IpAddressInfo
-        fields = ('id', 'ipaddress', 'ipaddress_detail', 'employee', 'employee_detail', 'ip_address', 'status',
+        fields = ('id', 'pc_name', 'ipaddress', 'ipaddress_detail', 'employee', 'employee_detail', 'ip_address', 'status',
                   'created_time', 'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail',
                   'mac_address')
 
