@@ -55,6 +55,8 @@ class Employee(BaseModel):
 
 
 class EmployeeFile(BaseModel):
+    employee = models.ForeignKey(Employee, related_name='employee_files', on_delete=models.SET_NULL, null=True,
+                               blank=True)
     title = models.CharField(_('Title'), max_length=255, blank=True, null=True)
     file = models.FileField(blank=True, null=True, upload_to='employee_file/%Y/%m/%d')
 

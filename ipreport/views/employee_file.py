@@ -32,27 +32,13 @@ class EmployeeFileFieldInfoView(APIView):
         return Response(field_info)
 
 
-class EmployeeFileViewList(ListCreateAPIView):
-    serializer_class = EmployeeFileSerializer
-    pagination_class = ResultsSetPagination
-    filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
-    filterset_class = EmployeeFileFilter
-    search_fields = ('EmployeeFile_id', 'name')
-    ordering = ['pk']
-    permission_classes = (AllowAny,)
-    http_method_names = ['get']
-
-    def get_queryset(self):
-        return EmployeeFile.objects.all()
-
-
 class EmployeeFileView(ListCreateAPIView):
     serializer_class = EmployeeFileSerializer
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = EmployeeFileFilter
     search_fields = (
-        'EmployeeFile_id', 'name'
+        'employee', 'title'
     )
     ordering = ['id']
 

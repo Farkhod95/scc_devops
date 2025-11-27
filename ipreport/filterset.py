@@ -23,6 +23,7 @@ class EmployeeFileFilter(FilterSet):
     class Meta:
         model = EmployeeFile
         fields = {
+            'employee': ['exact'],
             'title': ['exact'],
         }
 

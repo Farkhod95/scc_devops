@@ -97,7 +97,7 @@ class EmployeePublicSerializer(LocaleSerializer):
 class EmployeeFileSerializer(LocaleSerializer):
     class Meta:
         model = EmployeeFile
-        fields = ('id', 'title', 'file')
+        fields = ('id', 'employee', 'title', 'file')
 
 
 class WlanParentSerializer(LocaleSerializer):
