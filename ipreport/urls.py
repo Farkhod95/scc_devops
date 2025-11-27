@@ -7,6 +7,7 @@ from ipreport.views.employee import EmployeeView, EmployeeDetailView
 from ipreport.views.employee_file import EmployeeFileView, EmployeeFileDetailView
 from ipreport.views.ip_address import IpAddressView, IpAddressDetailView
 from ipreport.views.ip_address_info import IpAddressInfoView, IpAddressInfoDetailView
+from ipreport.views.ip_range_generatsiya import GenerateIpAddressInfoAPIView
 from ipreport.views.wlan import WlanView, WlanDetailView
 from ipreport.views.wlan_parent import WlanParentView, WlanParentDetailView
 
@@ -31,10 +32,13 @@ urlpatterns = [
 
     re_path(r'^ip-address-info/$', IpAddressInfoView.as_view(), name='ip-address-info-view'),
     path('ip-address-info/<int:pk>', IpAddressInfoDetailView.as_view(), name='ip-address-info-detail-view'),
+    path("ip-address-info/generate-range/", GenerateIpAddressInfoAPIView.as_view(), name="ipaddress-generate-range"),
 
     re_path(r'^camera-type/$', CameraTypeView.as_view(), name='camera-type-view'),
     path('camera-type/<int:pk>', CameraTypeDetailView.as_view(), name='camera-type-detail-view'),
 
     re_path(r'^camera/$', CameraView.as_view(), name='camera-view'),
     path('camera/<int:pk>', CameraDetailView.as_view(), name='camera-detail-view'),
+
+
 ]

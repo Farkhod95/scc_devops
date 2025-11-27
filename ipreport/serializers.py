@@ -185,6 +185,33 @@ class IpAddressInfoListSerializer(LocaleSerializer):
                   'mac_address')
 
 
+class IpAddressInfoRangeSerializer(serializers.Serializer):
+    ipaddress_id = serializers.IntegerField()
+    ipAddress = serializers.IPAddressField(protocol='IPv4')
+    number_from = serializers.IntegerField(min_value=1)
+    number_to = serializers.IntegerField(min_value=1)
+
+    def validate(self, attrs):
+        number_from = attrs['number_from']
+        number_to = attrs['number_to']
+
+        if number_from > number_to:
+            raise serializers.ValidationError(
+                {"number_from": "number_from number_to dan katta bo'lishi mumkin emas."}
+            )
+
+        # IpAddress mavjudligini tekshiramiz
+        try:
+            ipaddress_obj = IpAddress.objects.get(id=attrs['ipaddress_id'])
+        except IpAddress.DoesNotExist:
+            raise serializers.ValidationError(
+                {"ipaddress_id": "Bunday IpAddress (id) topilmadi."}
+            )
+
+        attrs['ipaddress_obj'] = ipaddress_obj
+        return attrs
+
+
 class CameraTypeSerializer(LocaleSerializer):
     class Meta:
         model = CameraType
