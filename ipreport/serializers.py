@@ -130,7 +130,7 @@ class WlanListSerializer(LocaleSerializer):
 class DeviceTypeSerializer(LocaleSerializer):
     class Meta:
         model = DeviceType
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'name_uz', 'name_ru', 'name_en')
 
 
 class IpAddressSerializer(LocaleSerializer):
@@ -182,7 +182,7 @@ class IpAddressInfoListSerializer(LocaleSerializer):
 class CameraTypeSerializer(LocaleSerializer):
     class Meta:
         model = CameraType
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'name_uz', 'name_ru', 'name_en')
 
 
 class CameraSerializer(LocaleSerializer):
