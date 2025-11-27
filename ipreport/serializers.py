@@ -3,7 +3,7 @@ from rest_framework import serializers
 from directory.serializers import RegionListPublicSerializer, DistrictListPublicSerializer, CountryListSerializer, \
     DepartmentListSerializer, PositionSerializer, RegionListSerializer, DistrictSerializer
 from users.serializers import UserDetailSerializer
-from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera, WlanParent
+from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera, WlanParent, EmployeeFile
 
 
 # Tarjima asosiy serializeri
@@ -92,6 +92,12 @@ class EmployeePublicSerializer(LocaleSerializer):
         fields = ('id', 'fio', 'avatar', 'gender', 'type', 'phone', 'email', 'date_of_birthday', 'pc_name',
                   'department', 'department_detail', 'position', 'position_detail', 'region', 'district', 'ip_address', 'updated_time', 'mac_address', 'vpn',
                   'ratsiya', 'domen', 'file_pdf', 'time_of_employment', 'time_to_go_to_work',)
+
+
+class EmployeeFileSerializer(LocaleSerializer):
+    class Meta:
+        model = EmployeeFile
+        fields = ('id', 'title', 'file')
 
 
 class WlanParentSerializer(LocaleSerializer):

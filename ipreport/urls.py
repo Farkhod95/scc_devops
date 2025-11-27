@@ -4,6 +4,7 @@ from ipreport.views.camera import CameraView, CameraDetailView
 from ipreport.views.camera_type import CameraTypeView, CameraTypeDetailView
 from ipreport.views.device_type import DeviceTypeView, DeviceTypeDetailView
 from ipreport.views.employee import EmployeeView, EmployeeDetailView
+from ipreport.views.employee_file import EmployeeFileView, EmployeeFileDetailView
 from ipreport.views.ip_address import IpAddressView, IpAddressDetailView
 from ipreport.views.ip_address_info import IpAddressInfoView, IpAddressInfoDetailView
 from ipreport.views.wlan import WlanView, WlanDetailView
@@ -12,6 +13,9 @@ from ipreport.views.wlan_parent import WlanParentView, WlanParentDetailView
 urlpatterns = [
     re_path(r'^employee/$', EmployeeView.as_view(), name='employee_view'),
     path('employee/<int:pk>', EmployeeDetailView.as_view(), name='employee_detail_view'),
+
+    re_path(r'^employee-file/$', EmployeeFileView.as_view(), name='employee-file-view'),
+    path('employee-file/<int:pk>', EmployeeFileDetailView.as_view(), name='employee-file-detail-view'),
 
     re_path(r'^wlan-parent/$', WlanParentView.as_view(), name='wlan-parent-view'),
     path('wlan-parent/<int:pk>', WlanParentDetailView.as_view(), name='wlan-parent-detail-view'),

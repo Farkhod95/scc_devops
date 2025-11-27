@@ -54,6 +54,15 @@ class Employee(BaseModel):
         verbose_name_plural = _('Employees')
 
 
+class EmployeeFile(BaseModel):
+    title = models.CharField(_('Title'), max_length=255, blank=True, null=True)
+    file = models.FileField(blank=True, null=True, upload_to='employee_file/%Y/%m/%d')
+
+    class Meta:
+        verbose_name = _('Employee File')
+        verbose_name_plural = _('Employee File')
+
+
 class WlanParent(BaseModel):
     name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
     ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
