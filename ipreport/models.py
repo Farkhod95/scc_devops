@@ -154,3 +154,16 @@ class Camera(BaseModel):
         verbose_name_plural = _('Camera')
 
 
+class Ratsiya(BaseModel):
+    employee = models.ForeignKey(Employee, related_name='employee_ratsiya', on_delete=models.SET_NULL, null=True,
+                                 blank=True)
+    image = models.ImageField(upload_to='ratsiya/%Y/%m/%d', null=True)
+    pazivnoy = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    serial_number = models.CharField(max_length=255, blank=True, null=True, unique=True)
+    phone_number = models.CharField(max_length=255, null=True, blank=True, unique=True)
+
+    class Meta:
+        verbose_name = _('Ratsiya')
+        verbose_name_plural = _('Ratsiya')
+
+

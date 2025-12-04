@@ -8,6 +8,7 @@ from ipreport.views.employee_file import EmployeeFileView, EmployeeFileDetailVie
 from ipreport.views.ip_address import IpAddressView, IpAddressDetailView
 from ipreport.views.ip_address_info import IpAddressInfoView, IpAddressInfoDetailView
 from ipreport.views.ip_range_generatsiya import GenerateIpAddressInfoAPIView
+from ipreport.views.ratsiya import RatsiyaView, RatsiyaDetailView
 from ipreport.views.wlan import WlanView, WlanDetailView
 from ipreport.views.wlan_parent import WlanParentView, WlanParentDetailView
 
@@ -40,5 +41,7 @@ urlpatterns = [
     re_path(r'^camera/$', CameraView.as_view(), name='camera-view'),
     path('camera/<int:pk>', CameraDetailView.as_view(), name='camera-detail-view'),
 
+    re_path(r'^ratsiya/$', RatsiyaView.as_view(), name='ratsiya-view'),
+    path('ratsiya/<int:pk>', RatsiyaDetailView.as_view(), name='ratsiya-detail-view'),
 
 ]

@@ -1,6 +1,6 @@
 from django_filters.rest_framework import FilterSet
 from ipreport.models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera, WlanParent, \
-    EmployeeFile
+    EmployeeFile, Ratsiya
 
 
 class EmployeeFilter(FilterSet):
@@ -102,4 +102,15 @@ class CameraFilter(FilterSet):
             'ip_address': ['exact'],
             'maska': ['exact'],
             'type': ['exact'],
+        }
+
+
+class RatsiyaFilter(FilterSet):
+
+    class Meta:
+        model = Ratsiya
+        fields = {
+            'employee': ['exact'],
+            'pazivnoy': ['exact'],
+            'serial_number': ['exact'],
         }

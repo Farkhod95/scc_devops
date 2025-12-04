@@ -3,7 +3,8 @@ from rest_framework import serializers
 from directory.serializers import RegionListPublicSerializer, DistrictListPublicSerializer, CountryListSerializer, \
     DepartmentListSerializer, PositionSerializer, RegionListSerializer, DistrictSerializer
 from users.serializers import UserDetailSerializer
-from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera, WlanParent, EmployeeFile
+from .models import Employee, Wlan, DeviceType, IpAddress, IpAddressInfo, CameraType, Camera, WlanParent, EmployeeFile, \
+    Ratsiya
 
 
 # Tarjima asosiy serializeri
@@ -238,3 +239,23 @@ class CameraListSerializer(LocaleSerializer):
         model = Camera
         fields = ('id', 'image', 'ip_address', 'maska', 'gateway', 'model', 'serial_number', 'type', 'type_detail',
                   'address', 'created_time', 'updated_time', 'created_by', 'created_by_detail', 'updated_by', 'updated_by_detail')
+
+
+
+class RatsiyaSerializer(LocaleSerializer):
+    class Meta:
+        model = Ratsiya
+        fields = ('id', 'employee', 'image', 'pazivnoy', 'serial_number', 'phone_number')
+        extra_kwargs = {
+            'employee': {"required": True},
+            'pazivnoy': {"required": True},
+            'serial_number': {"required": True},
+        }
+
+
+class RatsiyaListSerializer(LocaleSerializer):
+    employee_detail = EmployeePublicSerializer(source="employee", read_only=True)
+
+    class Meta:
+        model = Ratsiya
+        fields = ('id', 'employee', 'employee_detail', 'image', 'pazivnoy', 'serial_number', 'phone_number')
