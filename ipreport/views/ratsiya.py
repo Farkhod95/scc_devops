@@ -37,7 +37,7 @@ class RatsiyaView(ListCreateAPIView):
     pagination_class = ResultsSetPagination
     filter_backends = (filters.SearchFilter, filters.OrderingFilter, DjangoFilterBackend)
     filterset_class = RatsiyaFilter
-    search_fields = ('employee', 'pazivnoy', 'serial_number', 'phone_number',)
+    search_fields = ('employee__fio', 'pazivnoy', 'serial_number', 'phone_number',)
     ordering = ['id']
 
     def get_queryset(self):

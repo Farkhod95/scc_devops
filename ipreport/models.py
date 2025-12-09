@@ -166,4 +166,7 @@ class Ratsiya(BaseModel):
         verbose_name = _('Ratsiya')
         verbose_name_plural = _('Ratsiya')
 
+    def __str__(self):
+        return f"{self.pazivnoy or self.serial_number or self.phone_number or 'Ratsiya'}"
+
 
