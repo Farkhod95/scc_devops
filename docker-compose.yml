@@ -4,6 +4,7 @@ services:
   web:
     build: .
     container_name: devops_web
+    restart: always
     ports:
       - "8080:8000"   # host:container (host 8080 -> container 8000)
     volumes:
@@ -20,6 +21,7 @@ services:
   db:
     image: postgres:15
     container_name: db_devops
+    restart: always
     ports:
       - "5432:5432"  # host 5432 -> container 5432
     environment:
