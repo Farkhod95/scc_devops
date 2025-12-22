@@ -38,11 +38,11 @@ class Employee(BaseModel):
                                blank=True)
     department_head = models.ForeignKey('self', verbose_name=_('Bo‘lim boshligi'), related_name='subordinates', on_delete=models.SET_NULL, null=True, blank=True,)
 
-    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    mac_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    vpn = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    domen = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    ratsiya = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True)
+    mac_address = models.CharField(max_length=255, null=True, blank=True)
+    vpn = models.CharField(max_length=255, null=True, blank=True)
+    domen = models.CharField(max_length=255, null=True, blank=True)
+    ratsiya = models.CharField(max_length=255, null=True, blank=True)
     file_pdf = models.FileField(blank=True, null=True, upload_to='open_data/%Y/%m/%d')
     time_of_employment = models.DateField(_('Ishga kirgan vaqti'), null=True, blank=True, )
     time_to_go_to_work = models.DateField(_('Ishga ketgan vaqti'), null=True, blank=True, )
@@ -67,9 +67,9 @@ class EmployeeFile(BaseModel):
 
 class WlanParent(BaseModel):
     name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
-    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True)
     mask = models.CharField(_('Name'), max_length=255, blank=True, null=True)
-    gateway = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    gateway = models.CharField(max_length=255, null=True, blank=True)
     text = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -79,10 +79,10 @@ class WlanParent(BaseModel):
 
 class Wlan(BaseModel):
     parent = models.ForeignKey(WlanParent, related_name='wlan_parents', on_delete=models.SET_NULL, null=True, blank=True)
-    port_number = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    wlan_id = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    port_number = models.CharField(max_length=255, null=True, blank=True)
+    wlan_id = models.CharField(max_length=255, null=True, blank=True)
     name = models.CharField(_('Name'), max_length=255, blank=True, null=True)
-    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True)
     maska = models.CharField(max_length=255, null=True, blank=True)
     gateway = models.CharField(max_length=255, null=True, blank=True)
 
@@ -101,10 +101,10 @@ class DeviceType(BaseModel):
 
 
 class IpAddress(BaseModel):
-    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True)
     pc_name = models.CharField(max_length=255, null=True, blank=True)
     mask = models.CharField(_('Name'), max_length=255, blank=True, null=True)
-    gateway = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    gateway = models.CharField(max_length=255, null=True, blank=True)
     type = models.ForeignKey(DeviceType, related_name='ip_device', on_delete=models.SET_NULL, null=True, blank=True)
     text = models.TextField(null=True, blank=True)
 
@@ -122,7 +122,7 @@ class IpAddressInfo(BaseModel):
     pc_name = models.CharField(max_length=255, null=True, blank=True)
     ipaddress = models.ForeignKey(IpAddress, related_name='ipaddress_1', on_delete=models.SET_NULL, null=True, blank=True)
     employee = models.ForeignKey(Employee, related_name='ipaddress_info', on_delete=models.SET_NULL, null=True, blank=True)
-    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True)
     status = models.CharField(choices=STATUS, default='inactive', max_length=50, null=True, blank=True, )
     mac_address = models.CharField(_('MAC address'), max_length=255, blank=True, null=True)
 
@@ -141,11 +141,11 @@ class CameraType(BaseModel):
 
 class Camera(BaseModel):
     image = models.ImageField(upload_to='camera/%Y/%m/%d', null=True)
-    ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    ip_address = models.CharField(max_length=255, null=True, blank=True)
     maska = models.CharField(_('Maska'), max_length=255, blank=True, null=True)
     gateway = models.CharField(max_length=255, null=True, blank=True)
-    model = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    serial_number = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    model = models.CharField(max_length=255, null=True, blank=True, )
+    serial_number = models.CharField(max_length=255, null=True, blank=True)
     type = models.ForeignKey(CameraType, related_name='camera_type', on_delete=models.SET_NULL, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
 
