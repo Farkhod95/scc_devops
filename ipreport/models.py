@@ -143,7 +143,7 @@ class Camera(BaseModel):
     image = models.ImageField(upload_to='camera/%Y/%m/%d', null=True)
     ip_address = models.CharField(max_length=255, null=True, blank=True, unique=True)
     maska = models.CharField(_('Maska'), max_length=255, blank=True, null=True)
-    gateway = models.CharField(max_length=255, null=True, blank=True, unique=True)
+    gateway = models.CharField(max_length=255, null=True, blank=True)
     model = models.CharField(max_length=255, null=True, blank=True, unique=True)
     serial_number = models.CharField(max_length=255, null=True, blank=True, unique=True)
     type = models.ForeignKey(CameraType, related_name='camera_type', on_delete=models.SET_NULL, null=True, blank=True)
